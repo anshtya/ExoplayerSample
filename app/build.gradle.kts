@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     kotlin("kapt")
@@ -21,6 +23,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        val key = gradleLocalProperties(rootDir).getProperty("API_KEY") ?: ""
+        buildConfigField("String", "API_KEY", "\"$key\"")
     }
 
     buildTypes {

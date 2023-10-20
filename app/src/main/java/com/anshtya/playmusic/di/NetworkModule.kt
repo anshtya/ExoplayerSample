@@ -1,6 +1,7 @@
 package com.anshtya.playmusic.di
 
-import com.anshtya.playmusic.network.YoutubeApi
+import com.anshtya.playmusic.Constants
+import com.anshtya.playmusic.data.network.YoutubeApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +24,7 @@ object NetworkModule {
             .addInterceptor(logging)
             .build()
         return Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .client(client)
             .build()
