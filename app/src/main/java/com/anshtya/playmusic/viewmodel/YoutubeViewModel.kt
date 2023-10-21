@@ -16,28 +16,42 @@ import javax.inject.Inject
 class YoutubeViewModel @Inject constructor(
     private val youtubeApi: YoutubeApi
 ) : ViewModel() {
-    private val _searchText = MutableStateFlow("")
-    val searchText = _searchText.asStateFlow()
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
+    private val _errorText = MutableStateFlow<String?>("")
+    val errorText = _errorText.asStateFlow()
+
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery = _searchQuery.asStateFlow()
 
     private val _playlist = MutableStateFlow(Playlist())
     val playlist = _playlist.asStateFlow()
 
-    init {
-        _searchText.value = "https://youtube.com/playlist?list=PLDzeHZWIZsTryvtXdMr6rPh4IDexB5NIA&si=-5nMWJhdQAb767Ae"
-        searchPlaylist()
-    }
+//    init {
+//        _searchQuery.value = "https://youtube.com/playlist?list=PLDzeHZWIZsTryvtXdMr6rPh4IDexB5NIA&si=-5nMWJhdQAb767Ae"
+//        searchPlaylist()
+//    }
 
     fun searchPlaylist() {
         viewModelScope.launch {
-            val playlistId = _searchText.value
-                .substringAfter(Constants.YOUTUBE_PLAYLIST_BASE_URL)
-                .substringBefore(Constants.YOUTUBE_PLAYLIST_SI)
-            val playlist = youtubeApi.getPlaylist(playlistId = playlistId)
-            _playlist.update { playlist }
+            _errorText.update { null }
+            _isLoading.update { true }
+            try {
+                val playlistId = _searchQuery.value
+                    .substringAfter(Constants.YOUTUBE_PLAYLIST_BASE_URL)
+                    .substringBefore(Constants.YOUTUBE_PLAYLIST_SI)
+                val playlist = youtubeApi.getPlaylist(playlistId = playlistId)
+                _playlist.update { playlist }
+            } catch (e: Exception) {
+                _errorText.update { e.message }
+            } finally {
+                _isLoading.update { false }
+            }
         }
     }
 
-    fun updateText(newText: String) {
-        _searchText.update { newText }
+    fun updateText(newSearchQuery: String) {
+        _searchQuery.update { newSearchQuery }
     }
 }

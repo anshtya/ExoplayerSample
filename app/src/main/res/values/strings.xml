@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PlayMusic</string>
+    <string name="search_placeholder">Enter a playlist link</string>
 </resources>
