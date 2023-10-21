@@ -7,11 +7,11 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface YoutubeApi {
-    @GET("/playlistItems")
+    @GET("playlistItems")
     suspend fun getPlaylist(
-        @Query("playlistId") playlistId: String,
         @Query("part") part: String = Constants.PART,
         @Query("maxResults") maxResults: Int = Constants.MAX_RESULTS,
+        @Query("playlistId") playlistId: String,
         @Query("key") key: String = BuildConfig.API_KEY
     ): Playlist
 }

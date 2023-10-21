@@ -22,12 +22,17 @@ class YoutubeViewModel @Inject constructor(
     private val _playlist = MutableStateFlow(Playlist())
     val playlist = _playlist.asStateFlow()
 
+    init {
+        _searchText.value = "https://youtube.com/playlist?list=PLDzeHZWIZsTryvtXdMr6rPh4IDexB5NIA&si=-5nMWJhdQAb767Ae"
+        searchPlaylist()
+    }
+
     fun searchPlaylist() {
         viewModelScope.launch {
             val playlistId = _searchText.value
                 .substringAfter(Constants.YOUTUBE_PLAYLIST_BASE_URL)
                 .substringBefore(Constants.YOUTUBE_PLAYLIST_SI)
-            val playlist = youtubeApi.getPlaylist(playlistId)
+            val playlist = youtubeApi.getPlaylist(playlistId = playlistId)
             _playlist.update { playlist }
         }
     }
