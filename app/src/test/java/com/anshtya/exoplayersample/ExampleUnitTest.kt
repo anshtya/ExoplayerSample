@@ -1,4 +1,4 @@
-package com.anshtya.playmusic
+package com.anshtya.exoplayersample
 
 import org.junit.Test
 

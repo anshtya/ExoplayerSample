@@ -1,7 +1,7 @@
-package com.anshtya.playmusic
+package com.anshtya.exoplayersample
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class PlayMusicApplication: Application()
+class ExoplayerSampleApplication: Application()

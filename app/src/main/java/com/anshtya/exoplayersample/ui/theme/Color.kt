@@ -1,4 +1,4 @@
-package com.anshtya.playmusic.ui.theme
+package com.anshtya.exoplayersample.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
